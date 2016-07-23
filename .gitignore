@@ -1,1 +1,4 @@
 *.sqlite3
+_pycache__/
+*.pyc
+.DS_Store
