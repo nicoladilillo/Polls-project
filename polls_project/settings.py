@@ -32,13 +32,14 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
-    'django.contrib.admin',
+    'registration', #should be immediately above 'django.contrib.auth'
     'django.contrib.auth',
+    # ...other installed applications...
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'registration', #should be immediately above 'django.contrib.auth'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -123,5 +124,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Django registration redux
-ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
-REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
+REGISTRATION_OPEN = True
