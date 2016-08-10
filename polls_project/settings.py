@@ -32,14 +32,14 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
-    'registration', #should be immediately above 'django.contrib.auth'
-    'django.contrib.auth',
-    # ...other installed applications...
     'django.contrib.admin',
+    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'registration',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -125,7 +125,9 @@ STATIC_URL = '/static/'
 
 # Django registration redux
 REGISTRATION_OPEN = True
-REGISTRATION_AUTO_LOGIN = True  # If True, the user will be automatically logged in.
+ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
+REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
+SITE_ID = 1
 LOGIN_REDIRECT_URL = '/polls/'  # The page you want users to arrive at after they successful log in
 LOGIN_URL = '/accounts/login/'  # The page users are directed to if they are not logged in,
                                                                 # and are trying to access pages requiring authentication
