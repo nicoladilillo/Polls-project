@@ -1,7 +1,8 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.views import generic
+from registration.signals import user_registered
 
 from .models import Choice, Question
 
@@ -15,14 +16,17 @@ class IndexView(generic.ListView):
         return Question.objects.order_by('-pub_date')[:5]
 
 
-class DetailView(generic.DetailView):
-    model = Question
-    template_name = 'polls/detail.html'
+def detail(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    if request.user.is_authenticated():
+        return render(request, 'polls/detail.html', {'question': question})
+    else:
+        return render(request, 'polls/results.html', {'question': question})
 
 
-class ResultsView(generic.DetailView):
-    model = Question
-    template_name = 'polls/results.html'
+def results(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, 'polls/results.html', {'question': question})
 
 
 def vote(request, question_id):
