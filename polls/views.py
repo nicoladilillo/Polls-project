@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from registration.signals import user_registered
 
-from .models import Choice, Question
+from .models import Choice, Question, Voter
 
 
 class IndexView(generic.ListView):
@@ -31,17 +31,25 @@ def results(request, question_id):
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
+    # Vote only once
+    if Voter.objects.filter(poll_id=question_id, user_id=request.user.id).exists():
+        return render(request, 'polls/detail.html', {
+        'question': question,
+        'error_message': "Sorry, but you have already voted."
+        })
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
+        # Redisplay the poll voting form.
         return render(request, 'polls/detail.html', {
-            'question': question,
-            'error_message': "You didn't select a choice.",
+        'question': question,
+        'error_message': "You didn't select a choice."
         })
     else:
         selected_choice.votes += 1
         selected_choice.save()
+        v = Voter(user=request.user, poll=question)
+        v.save()
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
