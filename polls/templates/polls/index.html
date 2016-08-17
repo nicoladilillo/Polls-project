@@ -3,14 +3,26 @@
 
 {% block content %}
 
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
+{% if question %}
+  <p>Good question</p>
+  <ul>
+  {% for question in question %}
+    {% if timezone < question.end_date %}
+      <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+    {% endif %}
+  {% endfor %}
+  </ul>
+
+  <p>Expiration question</p>
+  <ul>
+  {% for question in question %}
+    {% if timezone > question.end_date %}
+      <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+    {% endif %}
+  {% endfor %}
+  </ul>
 {% else %}
-    <p>No polls are available.</p>
+  <p>No polls are available.</p>
 {% endif %}
 
 {% endblock %}

@@ -7,7 +7,7 @@ from django.utils import timezone
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField()
+    pub_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField()
 
     SINGLE = 'S'

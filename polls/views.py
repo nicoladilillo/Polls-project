@@ -3,22 +3,19 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.views import generic
 from registration.signals import user_registered
+from django.utils import timezone
 
 from .models import Choice, Question, Voter
 
 
-class IndexView(generic.ListView):
-    template_name = 'polls/index.html'
-    context_object_name = 'latest_question_list'
-
-    def get_queryset(self):
-        """Return the last five published questions."""
-        return Question.objects.order_by('-pub_date')[:5]
+def index(request):
+    question = Question.objects.order_by('-pub_date')
+    return render(request, 'polls/index.html', {'question': question, 'timezone': timezone.now })
 
 
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    if request.user.is_authenticated():
+    if request.user.is_authenticated() and question.end_date > timezone.now():
         return render(request, 'polls/detail.html', {'question': question})
     else:
         return render(request, 'polls/results.html', {'question': question})
