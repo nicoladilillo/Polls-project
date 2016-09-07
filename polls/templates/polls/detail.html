@@ -11,11 +11,13 @@
   {% for choice in question.choice_set.all %}
    <p>{{ choice.choice_text }}</p>
   {% endfor %}
-  <form action="." method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Text" />
-  </form>
+  {% if not error_message %}
+    <form action="." method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Text" />
+    </form>
+  {% endif %}
 
 {% else %}
 <form action="{% url 'polls:vote' question.id %}" method="post">

@@ -5,6 +5,8 @@
 
 <h1>{{ question.question_text }}</h1>
 
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
 {% if question.choice_type == "OPEN" %}
   {% for choice in question.choice_set.all %}
    <p>{{ choice.choice_text }}</p>

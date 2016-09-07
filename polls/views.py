@@ -23,7 +23,7 @@ def detail(request, question_id):
             form = ChoiceForm(request.POST or None)
             if form.is_valid():
                 if Voter.objects.filter(poll_id=question_id, user_id=request.user.id).exists():
-                    return render(request, 'polls/detail.html', {
+                    return render(request, 'polls/results.html', {
                         'question': question,
                         'form': form,
                         'error_message': "Sorry, but you have already voted."
@@ -35,7 +35,10 @@ def detail(request, question_id):
                     print instance.choice_text
                     v = Voter(user=request.user, poll=question)
                     v.save()
-            return render(request, 'polls/detail.html', {'question': question, 'form': form})
+            return render(request, 'polls/detail.html', {
+                'question': question,
+                'form': form,
+                })
         else:
             return render(request, 'polls/detail.html', {'question': question})
     else:
@@ -44,8 +47,6 @@ def detail(request, question_id):
 
 def results(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    if question.choice_type == "OPEN":
-        return redirect('polls.views.detail', question_id=question_id)
     return render(request, 'polls/results.html', {'question': question})
 
 
@@ -53,7 +54,7 @@ def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     # Vote only once
     if Voter.objects.filter(poll_id=question_id, user_id=request.user.id).exists():
-        return render(request, 'polls/detail.html', {
+        return render(request, 'polls/results.html', {
             'question': question,
             'error_message': "Sorry, but you have already voted."
         })
