@@ -7,22 +7,27 @@
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="{% url 'polls:vote' question.id %}" method="post">
-{% csrf_token %}
-
 {% if question.choice_type == "OPEN" %}
-  <input type="text" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
-{% else %}
+  {% for choice in question.choice_set.all %}
+   <p>{{ choice.choice_text }}</p>
+  {% endfor %}
+  <form action="." method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Text" />
+  </form>
 
+{% else %}
+<form action="{% url 'polls:vote' question.id %}" method="post">
+  {% csrf_token %}
   {% for choice in question.choice_set.all %}
     <input {% if question.choice_type == 'SINGLE' %}type="radio"{% endif %}
            {% if question.choice_type == 'MULTIPLE' %}type="checkbox"{% endif %}
       name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/>
     <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
   {% endfor %}
-
-{% endif %}
   <input type="submit" value="Vote" />
   </form>
+  {% endif %}
 
 {% endblock %}
