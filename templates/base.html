@@ -1,29 +1,43 @@
 {% load i18n %}
+
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>{% block title %}User test{% endblock %}</title>
 </head>
 
 <body>
     <div id="header">
-    {% block header %}
-    <a href="/polls/">{% trans "Home" %}</a> |
+      {% block header %}
+      <a href="/polls/">{% trans "Home" %}</a> |
 
-    {% if user.is_authenticated %}
-        {% trans "Logged in" %}: {{ user.username }}
-        (<a href="{% url 'auth_logout' %}">{% trans "Log out" %}</a> |
-        <a href="{% url 'auth_password_change' %}">{% trans "Change password" %}</a>)
-    {% else %}
-       <a href="{% url 'auth_login' %}">{% trans "Log in" %}</a>
-    {% endif %}
-    <hr />
-    {% endblock %}
+      {% if user.is_authenticated %}
+          {% trans "Logged in" %}: {{ user.username }}
+          (<a href="{% url 'auth_logout' %}">{% trans "Log out" %}</a> |
+          <a href="{% url 'auth_password_change' %}">{% trans "Change password" %}</a>)
+      {% else %}
+         <a href="{% url 'auth_login' %}">{% trans "Log in" %}</a>
+      {% endif %}
+      <hr />
+      {% endblock %}
     </div>
 
-    <div id="content">
+    <div id="account" class="col-sm-6 col-md-4 col-md-offset-4 container">
+    {% block account %}{% endblock %}
+    </div>
+
+    <div id="content" class=" container">
     {% block content %}{% endblock %}
     </div>
 

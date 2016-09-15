@@ -1,0 +1,19 @@
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% for choice in question.choice_set.all %}
+ <p>{{ choice.choice_text }}</p>
+{% endfor %}
+{% if not error_message %}
+  <form action="." method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+      
+{% endif %}

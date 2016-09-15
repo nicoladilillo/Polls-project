@@ -1,0 +1,18 @@
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+
+<form action="{% url 'polls:vote' question.id %}" method="post">
+  {% csrf_token %}
+  {% for choice in question.choice_set.all %}
+    <input {% if question.choice_type == 'SINGLE' %}type="radio"{% endif %}
+    {% if question.choice_type == 'MULTIPLE' %}type="checkbox"{% endif %}
+    name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/>
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+  {% endfor %}   

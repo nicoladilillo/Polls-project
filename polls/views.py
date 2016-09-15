@@ -13,7 +13,16 @@ from .form import ChoiceForm
 
 def index(request):
     question = Question.objects.order_by('-pub_date')
-    return render(request, 'polls/index.html', {'question': question, 'timezone': timezone.now })
+    c = 0
+    n = 0
+    for i in question:
+        if i.end_date > timezone.now():
+            c = c+1
+        else:
+            n = n+1
+
+    return render(request, 'polls/index.html', {'question': question,
+     'timezone': timezone.now , 'c': c, 'n': n})
 
 
 def detail(request, question_id):
