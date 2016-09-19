@@ -122,7 +122,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-STATIC_URL = '/static/'
+MEDIA_ROOT = 'media'
+STATIC_URL = 'static'
 
 # Django registration redux
 REGISTRATION_OPEN = True
