@@ -1,1 +1,1 @@
-web: gunicorn Polls-project.wsgi
+web: gunicorn app:app
