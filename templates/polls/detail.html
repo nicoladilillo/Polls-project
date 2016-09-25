@@ -19,9 +19,9 @@
 
 <div class="container">
   {% if question.choice_type == "OPEN" %}
-      {% include "./text.html" %}
+      {% include "./polls/text.html" %}
   {% else %}
-      {% include "./form.html" %}
+      {% include "./polls/form.html" %}
   {% endif %}
 </div>
   {% buttons %}
