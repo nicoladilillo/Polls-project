@@ -6,22 +6,22 @@ from registration.signals import user_registered
 from django.utils import timezone
 from django.views.generic.edit import FormView
 
-from .models import Choice, Question, Voter
+from .models import Choice, Question, Voter, Poll
 
 from .form import ChoiceForm
 
 
 def index(request):
-    question = Question.objects.order_by('-pub_date')
+    poll = Poll.objects.order_by('-pub_date')
     c = 0
     n = 0
-    for i in question:
+    for i in poll:
         if i.end_date > timezone.now():
             c = c+1
         else:
             n = n+1
 
-    return render(request, 'polls/index.html', {'question': question,
+    return render(request, 'polls/index.html', {'poll': poll,
      'timezone': timezone.now , 'c': c, 'n': n})
 
 

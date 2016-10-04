@@ -3,25 +3,25 @@
 
 {% block content %}
 
-{% if question %}
-  <h1>Good question</h1>
+{% if poll %}
+  <h1>Good Poll</h1>
   <ul>
-  {% for question in question %}
+  {% for poll in poll %}
     {% if not c %}
-      <p>No question</p>
+      <p>No good polls</p>
     {% endif %}
-    {% if timezone < question.end_date %}
-      <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+    {% if timezone < poll.end_date %}
+      <li><a href="{% url 'polls:detail' poll.id %}">{{ poll.title }}</a></li>
     {% endif %}
   {% endfor %}
   </ul>
 
   {% if n %}
-    <h1>Expiration question</h1>
+    <h1>Expiration Poll</h1>
     <ul>
-    {% for question in question %}
-      {% if timezone > question.end_date %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+    {% for poll in poll %}
+      {% if timezone > poll.end_date %}
+        <li><a href="{% url 'polls:detail' poll.id %}">{{ poll.title }}</a></li>
       {% endif %}
     {% endfor %}
     </ul>
