@@ -5,7 +5,11 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 
+class Poll(models.Model):
+    title = models.CharField(max_length=40)
+
 class Question(models.Model):
+    question = models.ForeignKey(Poll, on_delete=models.CASCADE)
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField()
