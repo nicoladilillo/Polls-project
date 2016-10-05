@@ -7,12 +7,6 @@
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 
-{% for choice in question.choice_set.all %}
- <p>{{ choice.choice_text }}</p>
-{% endfor %}
-{% if not error_message %}
-  <form action="." method="post">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-
-{% endif %}
+<form action="." method="post">
+  {% csrf_token %}
+  {% bootstrap_form form %}

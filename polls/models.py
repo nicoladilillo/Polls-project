@@ -46,4 +46,4 @@ class Choice(models.Model):
 
 class Voter(models.Model):
     user = models.ForeignKey(User)
-    poll = models.ForeignKey(Question)
+    poll = models.ForeignKey(Poll)

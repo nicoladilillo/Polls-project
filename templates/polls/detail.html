@@ -17,13 +17,17 @@
   {% bootstrap_alert 'Sorry, but you have already voted.' alert_type='danger' %}
 {% endif %}
 
+{% for question in poll.question_set.all %}
 <div class="container">
+  <p><strong>{{ question.question_text }}</strong></p>
   {% if question.choice_type == "OPEN" %}
-      {% include "./polls/text.html" %}
+     {% include "./polls/text.html" %}
   {% else %}
-      {% include "./polls/form.html" %}
+    {% include "./polls/form.html" %}
   {% endif %}
+{% endfor %}
 </div>
+
   {% buttons %}
     <button type="submit" class="btn btn-primary">
       {% bootstrap_icon "ok" %} Vote
